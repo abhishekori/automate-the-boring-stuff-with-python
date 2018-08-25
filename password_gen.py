@@ -7,16 +7,22 @@ Created on Sat Aug 25 21:15:00 2018
 """
 
 import sys
+import pyperclip
 import random
 from random import shuffle
+import csv
 
 if len(sys.argv)<2:
-    print('Usage python password_gen.py [account] [website]')
+    print('Usage python password_gen.py [website name]')
     sys.exit()
     
-account_name = sys.argv[1]
-website_name = sys.argv[2]
-
+website_name = sys.argv[1]
+def appendToCsv(row):    
+    with open('passwords.csv',mode='a') as pass_file:
+        pass_writer=csv.writer(pass_file,delimiter=',')
+        pass_writer.writerow(row)
+   
+    
 password=[]
 
 for i in range(3):
@@ -33,4 +39,22 @@ for i in range(2):
     
 shuffle(password)
 password="".join(password)
+
+
+with open('passwords.csv',mode='r') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+    for row in csv_reader:
+        if row['website']==website_name:
+            #print(f'{row["website"]} {row["password"]}')
+            print(str(row['password']))
+#            pyperclip.copy(str(row['password']))
+#            #print(pyperclip.paste())
+#            print(f'password for {row["website"]} copied to clipboard!')
+            sys.exit()
+    print(password)
+    appendToCsv([website_name,password])
+    print(f'New password generated for {website_name} and copied to clipboard!')
+        
+    
+    
 
