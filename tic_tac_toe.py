@@ -5,30 +5,35 @@ Created on Sat Aug 25 00:01:56 2018
 
 @author: abhishek
 """
-print('_|_|_')
-print('_|_|_')
-print('_|_|_')
+
 def printPositions(positions):
+    """To print the current postion
+        @param postions list
+        @return
+    """
+
     for row in positions:
         for pos in row:
             print(str(pos),end='')
         print('\n')
     
+
 def getInput():
+    """
+    reads input from command line
+    @param
+    @return string input from the commandline
+    """
     n=input()
     return n
 
-def checkGameStatus(positions):
-    i=0
-    for row in positions:
-        for pos in row:
-            if pos !=0:
-                i=i+1
-        if i==3:
-            print(str(row))
-                
-        
 def checkRow(cur_player,row):
+    """
+    loops through the last input row and checks if 3 marks are there
+    @param cur_player current player who played, row current row where the player               marks his positon
+
+    """
+
     i=0
     for pos in range(3):
         if positions[row][pos]==cur_player:
@@ -37,7 +42,10 @@ def checkRow(cur_player,row):
         return True
     else:
         return False
+    
+    
 def checkColumn(cur_player,pos):
+    """gets the current player and column. Loops through the column and checks if there are 3 marks"""
     i=0
     for row in range(3):
         if positions[row][pos]==cur_player:
@@ -49,6 +57,7 @@ def checkColumn(cur_player,pos):
     
 
 def checkDiagonal(cur_player,row,pos):
+    """Checks the diagonals if there are 3 marks"""
     c1=0
     c2=0
     j=2
@@ -68,6 +77,7 @@ def checkDiagonal(cur_player,row,pos):
     
     
 def checkGame(cur_player,row,pos):
+    """this function will call checkColumn,checkRow and checkDiagonal and returns if any one of the checks returns true"""
     if checkRow(cur_player,row) == True or checkColumn(cur_player,pos)==True or checkDiagonal(cur_player,row,pos)==True:
         return True
 
@@ -79,6 +89,7 @@ printPositions(positions)
 
 
 def startGame(positions,cur_player,pos):
+    """This is the main program where it takes input, marks the users input on the board, checks each time of the entry and prints if someone has won or draw match"""
     for i in range(8):
         print(str(cur_player)+' Turn \n')
         input_pos=int(getInput())
@@ -93,15 +104,11 @@ def startGame(positions,cur_player,pos):
                     if checkGame(cur_player,row,pos)==True:
                         print('Player '+str(cur_player)+' is the winner')
                         return True
-                    
-                    
-                
-    #    positions[pos]=cur_player
+
         cur_player=2 if cur_player==1 else 1
-        #printPositions(positions)
     print('Match draw')
        
-
+"""Call the main program"""
 startGame(positions,cur_player,pos)    
 
     
